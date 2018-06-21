@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "640314739842",
+    "firebase_url": "https://coralfits.firebaseio.com",
+    "project_id": "coralfits",
+    "storage_bucket": "coralfits.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640314739842:android:fb09822691d998d8",
+        "android_client_info": {
+          "package_name": "com.caesar.ken.coralfits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640314739842-btlioojht1uhpulb3c50v7msus012pij.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.caesar.ken.coralfits",
+            "certificate_hash": "346ff1cd3b5e8b3a833bf06fd296a003c3f3c59c"
+          }
+        },
+        {
+          "client_id": "640314739842-7k1cnmp0r96espfg6f4k7bshqc4s09m3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "640314739842-7k1cnmp0r96espfg6f4k7bshqc4s09m3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQEtz4BOVYQCtrEzdNUP0WCXrsRpIbYYk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640314739842-7k1cnmp0r96espfg6f4k7bshqc4s09m3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,11 +6,11 @@ package com.caesar.ken.coralfits;
 
 public class CoralModelClass {
 
-    private String Title;
+    private String title;
     private String imageId;
 
     public CoralModelClass(String title, String imageId) {
-        this.Title = title;
+        this.title = title;
         this.imageId = imageId;
     }
 
@@ -18,11 +18,11 @@ public class CoralModelClass {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        this.Title = title;
+        this.title = title;
     }
 
     public String getImageId() {

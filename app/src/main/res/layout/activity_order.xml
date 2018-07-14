@@ -8,6 +8,7 @@
     android:id="@+id/coordinateorder">
 
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="300dp">
@@ -18,12 +19,12 @@
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="this is your order"
-                app:layout_collapseMode="parallax"></ImageView>
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/excer"
+                android:background="@android:color/holo_orange_dark"
+                android:src="@drawable/ordercloths"/>
             <!--android:src="@drawable/gotorder"-->/>
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
@@ -37,8 +38,10 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/corrallogo"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,34 +50,64 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/nameInfo"
                 android:hint="please enter your name"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/datainfo"
                 android:hint="Pls enter your Info"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gotorder"
-                android:id="@+id/imageorder"/>
-            
+
+
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="capture Image"
+                android:text="upload from camera"
+                android:backgroundTint="@color/amber_400"
+                android:drawableRight="@drawable/icon_camera_upload"
                 android:background="@drawable/com_facebook_button_login_silver_background"
-                android:id="@+id/uploadbutton"/>
+                android:id="@+id/uploadcamera"/>
+
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:onClick="uploadGallery"
+                android:backgroundTint="@color/amber_300"
+                android:drawableRight="@drawable/icon_gallery"
                 android:id="@+id/uploadGallery"
-                android:text="upload from gallery"/>
+                android:text="upload from gallery"
+                />
+            <Button
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:text="Upload to admin"
+                android:id="@+id/uploadAdmin"
+                android:drawableRight="@drawable/upload_image"
+                android:backgroundTint="@color/green_A700"/>
+
+            <Button
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:text="Go To Admin"
+                android:id="@+id/adminIntentButton"
+                android:background="@color/purple_A400"/>
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/imageorder"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="0dp"/>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+    <!--<ProgressBar-->
+        <!--android:id="@+id/upload_progress"-->
+        <!--style="?android:attr/progressBarStyleLarge"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:visibility="gone" />-->
 
 </android.support.design.widget.CoordinatorLayout>

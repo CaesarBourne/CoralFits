@@ -10,4 +10,12 @@
         app:showAsAction="ifRoom"
         >
     </item>
+    <item
+        android:title="logout"
+        android:orderInCategory="10"
+        android:icon="@drawable/account_logout"
+        app:showAsAction="ifRoom"
+        android:id="@+id/logoutUser"
+        >
+    </item>
 </menu>

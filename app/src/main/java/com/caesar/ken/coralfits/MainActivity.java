@@ -1,21 +1,45 @@
 package com.caesar.ken.coralfits;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
+
+import com.caesar.ken.coralfits.Login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar tabToolbar;
+
+    public static void startMainActivity(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+    public static void startMainActivity(Context context, int flags){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(flags);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +51,21 @@ public class MainActivity extends AppCompatActivity {
         TabLayout myTablayout = (TabLayout) findViewById(R.id.myTablayout);
         myTablayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(sectionAdapter);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+                startActivity(intent);
+            }
+        });
+        fab.setContentDescription("Make an order");
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -42,10 +79,39 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, OrderActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.logoutUser:
+                startAlertDialogLogout();
+                return true;
             default
                     :return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public void startAlertDialogLogout(){
+        new AlertDialog.Builder(this).setTitle("Logout")
+                .setMessage("Are you sure you want to Logout")
+                .setIcon(R.drawable.logout_warning)
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        logoutUser();
+                  LoginActivity.startActivityInstance(getApplicationContext(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
+    public void logoutUser(){
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            FirebaseAuth.getInstance().signOut();
+        }
     }
 
     public class SectionsPageAdapter extends FragmentPagerAdapter {

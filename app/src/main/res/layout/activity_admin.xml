@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/admintoolbar"
+            android:backgroundTint="@color/orange_400"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ImageView
+        android:id="@+id/adminImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:paddingTop="30dp" />
+
+    <Button
+        android:id="@+id/uploadEnglishCloth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@color/green_100"
+        android:text="EnglishUpload"
+        android:layout_alignTop="@+id/uploadNativeCloth" />
+
+    <Button
+        android:id="@+id/uploadNativeCloth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green_200"
+        android:text="NativeUpload"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="114dp" />
+
+    <Button
+        android:id="@+id/uploadCustomCloth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/uploadEnglishCloth"
+        android:background="@color/green_300"
+        android:text="CustomUpload" />
+
+    <Button
+        android:id="@+id/getGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/getCamera"
+        android:layout_marginStart="61dp"
+        android:background="@color/red_100"
+        android:text="Gallery Fetch" />
+
+    <Button
+        android:id="@+id/getCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="226dp"
+        android:layout_toEndOf="@+id/uploadNativeCloth"
+        android:background="@color/red_200"
+        android:text="Camera Fetch" />
+
+    <EditText
+        android:id="@+id/priceInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/uploadEnglishCloth"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:hint="Plrase enter the price of the outfit"
+        android:ems="10"
+        android:inputType="textPersonName"
+        />
+
+</RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -82,7 +83,7 @@ public class AdminActivity extends AppCompatActivity {
 
             final Uri urigallery = data.getData();
 
-            final StorageReference filepathgallery = mystorage.child(Constants.ADMIN_PHOTOS).child(urigallery.getLastPathSegment());
+            final StorageReference filepathStorage = mystorage.child(Constants.ADMIN_PHOTOS).child(urigallery.getLastPathSegment());
 
 
 
@@ -93,25 +94,28 @@ public class AdminActivity extends AppCompatActivity {
             englishButtton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (priceInfo != null){
-                    filepathgallery.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is incorrect or empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try{
+                    filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(AdminActivity.this, "image gotten from gallery", Toast.LENGTH_LONG).show();
-
-                            final String uploadtext = priceInfo.getText().toString();
-                            final String imageurl = taskSnapshot.getDownloadUrl().toString();
-
-// after adding to firebase storage then add to the database adding method
-                            recieveImageFromStorageEnglish(uploadtext, imageurl);
-                            Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
-
+                            filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    final String uploadtext = priceInfo.getText().toString();
+                                    final String imageUrl = uri.toString();
+                                    recieveImageFromStorageEnglish(uploadtext,imageUrl);
+                                    Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     });
-                }
-                         else {
-                            Toast.makeText(getApplicationContext(), "you must input the price of the outfit", Toast.LENGTH_LONG).show();
-                        }
+                }catch (Exception e){
+
+                    }
 
                 }
             });
@@ -120,22 +124,28 @@ public class AdminActivity extends AppCompatActivity {
             nativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (priceInfo != null) {
-                        filepathgallery.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try {
+                        filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(AdminActivity.this, "image gotten from gallery", Toast.LENGTH_LONG).show();
-
-                                final String uploadtext = priceInfo.getText().toString();
-                                final String imageurl = taskSnapshot.getDownloadUrl().toString();
-
-// after adding to firebase storage then add to the database adding method
-                                recieveImageFromStorageNative(uploadtext, imageurl);
-                                Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = priceInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorageNative(uploadtext,imageUrl);
+                                        Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
 
                             }
                         });
-                    } else {
+                    } catch (Exception e){
+                        e.printStackTrace();
                         Toast.makeText(getApplicationContext(), "you must input the price of the outfit", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -148,19 +158,23 @@ public class AdminActivity extends AppCompatActivity {
             customButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (priceInfo.getText().toString() != null) {
-                        filepathgallery.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try {
+                        filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(AdminActivity.this, "image gotten from gallery", Toast.LENGTH_LONG).show();
-
-                                final String uploadtext = priceInfo.getText().toString();
-                                final String imageurl = taskSnapshot.getDownloadUrl().toString();
-
-// after adding to firebase storage then add to the database adding method
-
-                                Toast.makeText(AdminActivity.this, "uploading Image Succesful", Toast.LENGTH_LONG).show();
-                                recieveImageFromStorageCustom(uploadtext, imageurl);
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = priceInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorageCustom(uploadtext,imageUrl);
+                                        Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -168,15 +182,42 @@ public class AdminActivity extends AppCompatActivity {
                                 Toast.makeText(AdminActivity.this, "uploading Image failed", Toast.LENGTH_LONG).show();
                             }
                         });
-                    } else {
+                    } catch (Exception e){
+                        e.printStackTrace();
                         Toast.makeText(AdminActivity.this, "you must input the price of the outfit", Toast.LENGTH_LONG).show();
                     }
                         }
                     });
 
+  }
+//
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    public boolean validateForm() {
+        boolean valid = true;
+
+//        String nameemail = nameInfo.getText().toString();
+//        if (TextUtils.isEmpty(nameemail)){
+//            valid = false;
+//            nameInfo.setError("you must put in your email address");}
+//        else if (!nameemail.contains("@")) {
+//            valid = false;
+//            nameInfo.setError("not a valid email address");
+//        }else{
+//            nameInfo.setError(null);
+//        }
+
+        String dataText = priceInfo.getText().toString();
+        if (TextUtils.isEmpty(dataText)){
+            valid = false;
+            priceInfo.setError("You must put in Info about your choice");
+        }
+        else {
+            priceInfo.setError(null);
+
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
+        return valid;
     }
     //receive image from firebase storage and send to firebasedatabase
     public void recieveImageFromStorageEnglish(String title, String imageUrl){

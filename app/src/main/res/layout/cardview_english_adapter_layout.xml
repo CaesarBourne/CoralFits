@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/info_text"
+            android:drawableLeft="@drawable/naira"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>

@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableLayout;
 
+import com.caesar.ken.coralfits.CorralPayment.PaymentStack;
+import com.caesar.ken.coralfits.CorralPayment.TestPayStack;
 import com.caesar.ken.coralfits.Login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.createorder:
-                Intent intent = new Intent(this, OrderActivity.class);
+                Intent intent = new Intent(this, TestPayStack.class);
                 startActivity(intent);
                 return true;
             case R.id.logoutUser:

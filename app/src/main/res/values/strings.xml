@@ -14,6 +14,14 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_login_computer">Sign in</string>
+    <string name="check">Check</string>
+    <string name="cvv">CVV</string>
+    <string name="expiry">Expires on</string>
+    <string name="card_number">Card Number</string>
+    <string name="pay">Pay For Transaction</string>
+    <string name="yy">YY</string>
+    <string name="expiry_month">MM</string>
+    <string name="email">Email address</string>
 
     <string-array name="Eatery">
         <item>MrBiggs</item>

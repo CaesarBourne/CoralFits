@@ -17,6 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_test_31c425fa24e6450068d2573450eb267748c25723"></meta-data>
+
         <activity android:name=".MainActivity" />
         <activity
             android:name=".OrderActivity"
@@ -30,7 +34,7 @@
 
         <activity
             android:name=".Login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".RegisterActivity.RegisterActivity" />
         <activity
             android:name=".SplashActivity"
@@ -42,7 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".CorralPayment.PaymentStack"></activity>
+        <activity android:name=".CorralPayment.TestPayStack"></activity>
     </application>
 
 </manifest>

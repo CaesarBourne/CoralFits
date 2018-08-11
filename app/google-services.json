@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "640314739842-7k1cnmp0r96espfg6f4k7bshqc4s09m3.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "640314739842-6720dpggoqpoad1g86snkkml24lbih8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.caesar.ken.coralfits",
+            "certificate_hash": "65455eabd13fd500264985f796e5f6dd4a85a183"
+          }
         },
         {
           "client_id": "640314739842-7k1cnmp0r96espfg6f4k7bshqc4s09m3.apps.googleusercontent.com",

@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.caesar.ken.coralfits.CorralPayment.TestPayStack;
 import com.caesar.ken.coralfits.Utilitites.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +35,7 @@ import com.squareup.picasso.Picasso;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private Button uploadCamera, adminIntentButton;
+    private Button uploadCamera, adminIntentButton, startPaystack;
     private Button gallerybutton, uploadAdmin;
     ImageView cameraImage;
     private StorageReference mystorage;
@@ -46,6 +47,16 @@ public class OrderActivity extends AppCompatActivity {
     public static final String TAG = "OrderActivity";
     private EditText dataInfo, nameInfo;
     private View mProgressView;
+
+    public static void startAdminActivity(Context context){
+        Intent intent = new Intent(context, AdminActivity.class);
+        context.startActivity(intent);
+    }
+    public static void startAdminActivity(Context context, int flags){
+        Intent intent = new Intent(context, AdminActivity.class);
+        intent.setFlags(flags);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,7 @@ public class OrderActivity extends AppCompatActivity {
         toolbaractionBar.setDisplayHomeAsUpEnabled(true);
 
         mystorage = FirebaseStorage.getInstance().getReference();
+        startPaystack = findViewById(R.id.startPayActivity);
         uploadCamera = (Button) findViewById(R.id.uploadcamera);
         uploadAdmin = (Button) findViewById(R.id.uploadAdmin);
         cameraImage = (ImageView) findViewById(R.id.imageorder);
@@ -82,10 +94,13 @@ public class OrderActivity extends AppCompatActivity {
         uploadCamera.setContentDescription("Camera upload");
 //        if (FirebaseAuth.getInstance().getCurrentUser().getEmail().toString() == "faxchat@gmail.com"){
 //            adminIntentButton.setVisibility(View.VISIBLE);
-//        }else {
-//            adminIntentButton.setVisibility(View.INVISIBLE);
 //        }
-        String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+//        adminIntentButton.setVisibility(View.INVISIBLE);
+        String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString().trim();
+        String AdminEmail ="faxchat@gmail.com";
+        if (emailUser.equals(AdminEmail) | emailUser.equals("tobiadeleke@gmail.com") ){
+            adminIntentButton.setVisibility(View.VISIBLE);
+        }
         Log.d(TAG, "THis is the email of the signed in user: " + emailUser + " ese o");
         adminIntentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,11 +125,17 @@ public class OrderActivity extends AppCompatActivity {
             final String image = getIntent().getExtras().getString(EXTRA_CARD_VIEW_image);
             final String title = getIntent().getExtras().getString(EXTRA_CARD_VIEW_title);
             Picasso.get().load(image).into(cameraImage);
-            cameraImage.setContentDescription(title);
-            uploadAdmin.setOnClickListener(new View.OnClickListener() {
+            cameraImage.setContentDescription(title);//
+            uploadCamera.setVisibility(View.INVISIBLE);
+            gallerybutton.setVisibility(View.INVISIBLE);
+            startPaystack.setVisibility(View.VISIBLE);
+            startPaystack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    justSendToAdmin(title, image);
+                   Intent intent = new Intent(OrderActivity.this, TestPayStack.class);
+                   intent.putExtra(TestPayStack.EXTRA_PAY__ORDER_title, title);
+                   intent.putExtra(TestPayStack.EXTRA_PAY_ORDER_image, image);
+                   startActivity(intent);
                     Toast.makeText(OrderActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
                 }
             });
@@ -133,23 +154,23 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-    public void justSendToAdmin(String text, String imageData) {
-        final StorageReference filepathEnglish = mystorage.child("Photos").child(String.valueOf(System.currentTimeMillis()));
-        Uri fragmentUri = Uri.parse(text);
-        filepathEnglish.putFile(fragmentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(OrderActivity.this, "uploading complete", Toast.LENGTH_LONG).show();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(OrderActivity.this, "uploading failed", Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
+//    public void justSendToAdmin(String text, String imageData) {
+//        final StorageReference filepathEnglish = mystorage.child("Photos").child(String.valueOf(System.currentTimeMillis()));
+//        Uri fragmentUri = Uri.parse(text);
+//        filepathEnglish.putFile(fragmentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Toast.makeText(OrderActivity.this, "uploading complete", Toast.LENGTH_LONG).show();
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(OrderActivity.this, "uploading failed", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//    }
 
 
 //    //the onclick
@@ -161,27 +182,50 @@ public class OrderActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             //this below containsthe data of the captured image
-            Uri uri = data.getData();
+            final Uri uriCamera = data.getData();
 //            Bundle extras = data.getExtras();
 //            //get photo info and tyecast to a bitmap
 //            Bitmap photo = (Bitmap) extras.get("data");
 //            cameraImage.setImageBitmap(photo);
             //this is the file path to store the images thatb are captured
-            StorageReference filepathcamera = mystorage.child("Photos").child(uri.getLastPathSegment());
+             final StorageReference filepathStorage = mystorage.child("Photos").child(uriCamera.getLastPathSegment());
             //this is for admin upload
-            filepathcamera.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            uploadAdmin.setVisibility(View.VISIBLE);
+            uploadCamera.setVisibility(View.INVISIBLE);
+            gallerybutton.setVisibility(View.INVISIBLE);
+            Picasso.get().load(uriCamera).into(cameraImage);
+            uploadAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(OrderActivity.this, "uploading complete", Toast.LENGTH_LONG).show();
+                public void onClick(View view) {
+                    if (!validateForm()){
+                        Toast.makeText(OrderActivity.this, "one od the fields is incorrect or empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }try{
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(OrderActivity.this, "uploading failed", Toast.LENGTH_LONG).show();
+
+
+                        filepathStorage.putFile(uriCamera).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = dataInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorage(uploadtext,imageUrl);
+                                        Toast.makeText(OrderActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        });
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             });
-        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+
+        }
+        else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
             final Uri urigallery = data.getData();
             final StorageReference filepathStorage = mystorage.child("Photos").child(urigallery.getLastPathSegment());
             Log.d(TAG, "this is the last path segment "+ urigallery.getLastPathSegment() + " thanks for seeing it");

@@ -77,6 +77,113 @@ public class AdminActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
 
+            final Uri urigallery = data.getData();
+
+            final StorageReference filepathStorage = mystorage.child(Constants.ADMIN_PHOTOS).child(urigallery.getLastPathSegment());
+
+
+
+            Picasso.get().load(urigallery).into(adminImage);
+
+//ENGLISH BUTTON
+            englishButtton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is incorrect or empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try{
+                        filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = priceInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorageEnglish(uploadtext,imageUrl);
+                                        Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        });
+                    }catch (Exception e){
+
+                    }
+
+                }
+            });
+
+//NATIVE BUTTON
+            nativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try {
+                        filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = priceInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorageNative(uploadtext,imageUrl);
+                                        Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                            }
+                        });
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "you must input the price of the outfit", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+
+
+
+//CUSTOM BUTTON
+            customButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!validateForm()){
+                        Toast.makeText(AdminActivity.this, "price field is empty", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try {
+                        filepathStorage.putFile(urigallery).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                filepathStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final String uploadtext = priceInfo.getText().toString();
+                                        final String imageUrl = uri.toString();
+                                        recieveImageFromStorageCustom(uploadtext,imageUrl);
+                                        Toast.makeText(AdminActivity.this, "uploading finished", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AdminActivity.this, "uploading Image failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(AdminActivity.this, "you must input the price of the outfit", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
         }
         else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
 

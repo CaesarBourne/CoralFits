@@ -21,16 +21,17 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 
-        if (FirebaseInstanceId.getInstance().getToken() != null )
-        {
-            String token = FirebaseInstanceId.getInstance().getToken().toString();
-            Log.d(TAG, "This is the token for this user: "+ token+ " thanks for seen it" );
-            Toast.makeText(this,"the token is given thus: " + token+" Oti pari", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this, "Ogaade there is no token avalable", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "This BAD BOY IS EMPTY "+ FirebaseInstanceId.getInstance().getToken() +" NO THANKS ITS NOT THERE" );
-        }
+//        if (FirebaseInstanceId.getInstance().getToken() != null )
+//        {
+//            String token = FirebaseInstanceId.getInstance().getToken().toString();
+//            Log.d(TAG, "This is the token for this user: "+ token+ " thanks for seen it" );
+//            Toast.makeText(this,"the token is given thus: " + token+" Oti pari", Toast.LENGTH_LONG).show();
+//        }else{
+//            Toast.makeText(this, "Ogaade there is no token avalable", Toast.LENGTH_LONG).show();
+//            Log.d(TAG, "This BAD BOY IS EMPTY "+ FirebaseInstanceId.getInstance().getToken() +" NO THANKS ITS NOT THERE" );
+//        }
         myHandler = new Handler();
 
         runnable = new Runnable() {

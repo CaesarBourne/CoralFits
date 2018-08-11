@@ -7,8 +7,6 @@
     tools:context="com.caesar.ken.coralfits.OrderActivity"
     android:id="@+id/coordinateorder">
 
-
-
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="300dp">
@@ -25,7 +23,9 @@
                 android:id="@+id/excer"
                 android:background="@android:color/holo_orange_dark"
                 android:src="@drawable/ordercloths"/>
-            <!--android:src="@drawable/gotorder"-->/>
+
+            <!--android:src="@drawable/gotorder"-->
+
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -86,13 +86,16 @@
                 android:id="@+id/uploadAdmin"
                 android:drawableRight="@drawable/upload_image"
                 android:backgroundTint="@color/green_A700"/>
-
             <Button
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:text="Go To Admin"
                 android:id="@+id/adminIntentButton"
+                android:visibility="gone"
                 android:background="@color/purple_A400"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="150dp"
@@ -101,6 +104,18 @@
                 android:scaleType="fitXY"
                 android:layout_marginLeft="0dp"/>
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/startPayActivity"
+                    android:text="Pay for Outfit"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/orange_300"
+                    android:layout_toRightOf="@+id/imageorder"
+                    android:layout_alignTop="@+id/imageorder"
+                    android:padding="10dp"/>
+
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
     <!--<ProgressBar-->

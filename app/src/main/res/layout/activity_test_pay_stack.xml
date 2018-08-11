@@ -154,24 +154,56 @@
             android:layout_below="@id/textview_cvv"
             android:imeOptions="actionDone"
             android:inputType="number"
-            android:maxLength="2"
+            android:maxLength="3"
             android:maxLines="1"
             android:padding="8dp" />
     </RelativeLayout>
 
     <!--Pay Button -->
-    <Button
-        android:id="@+id/pay_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:background="@color/red_200"
-        android:text="@string/pay"
-        android:textAllCaps="true"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        <!-- Expiry Text for credit card number-->
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_viewImageView"
+            android:layout_width="100dp"
+            android:layout_below="@+id/layout_cvv"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            card_view:cardCornerRadius="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:id="@+id/payImageView"
+            android:scaleType="fitXY"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textPrice"
+                android:drawableLeft="@drawable/naira"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/pay_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="86dp"
+            android:background="@color/red_200"
+            android:text="@string/pay"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </LinearLayout>

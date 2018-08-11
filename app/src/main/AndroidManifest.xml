@@ -16,10 +16,12 @@
         android:label="Corral Fits"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="co.paystack.android.PublicKey"
-            android:value="pk_test_31c425fa24e6450068d2573450eb267748c25723"></meta-data>
+            android:value="pk_live_fb45af6c8a78fc3ce459189b6fe8687c8d9b3606"></meta-data>
 
         <activity android:name=".MainActivity" />
         <activity

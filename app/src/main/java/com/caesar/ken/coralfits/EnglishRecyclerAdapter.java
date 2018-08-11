@@ -17,6 +17,7 @@ import java.util.List;
 
 public class EnglishRecyclerAdapter extends RecyclerView.Adapter<EnglishRecyclerAdapter.EViewHolder>{
 
+
     public  String imageData[];
     private static final String TAG = "EnglishRecyclerAdapter";
     public String textData[];

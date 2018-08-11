@@ -4,12 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private static final String TAG = "RegisterActivity";
+    NotificationCompat.Builder notification;
+    private static final int uniqueId = 646847;
 
 
     public static void startActivity(Context context){
@@ -59,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar loginToolbar = (Toolbar) findViewById(R.id.logintoolbar);
         loginToolbar.setTitle("Corral Fits");
         setSupportActionBar(loginToolbar);
+        notification = new NotificationCompat.Builder(this);
+        notification.setAutoCancel(true);
 
         Button registerButton = (Button) findViewById(R.id.registeraton_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +180,25 @@ public class RegisterActivity extends AppCompatActivity {
     }
     public void onAddUserSuccess(String message){
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        notification.setTicker("Order for the best outfits is vogue");
+        notification.setContentTitle("Corral Fits");
+        notification.setContentText("Welcome to Corral fits ");
+        notification.setWhen(System.currentTimeMillis());
+        notification.setSmallIcon(R.drawable.corrallogo);
+        notification.setLights(Color.BLUE, 500, 500);
+        long[] pattern ={500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500};
+        notification.setVibrate(pattern);
+        notification.setStyle(new NotificationCompat.InboxStyle());
+        Uri alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        notification.setSound(alarmsound);
+        notification.setContentIntent(pendingIntent);
+
+        NotificationManager notmanage = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notmanage.notify(uniqueId, notification.build());
         MainActivity.startMainActivity(getApplicationContext(), Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 

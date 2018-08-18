@@ -331,6 +331,8 @@ public class AdminActivity extends AppCompatActivity {
         CoralModelClass coralModelClassInstance = new CoralModelClass(title, imageUrl);
         Log.d(TAG, "this is the title and imageId " + title+ " imageId- " + imageUrl+" thanks eshe o");
         adminImage.setImageResource(R.drawable.corrallogo);
+        priceInfo.setText("");
+        Toast.makeText(this, "Image succesfully uploaded to app", Toast.LENGTH_LONG).show();
         FirebaseDatabase.getInstance().getReference().child(Constants.ENGLISH_WEARS).child(String.valueOf(System.currentTimeMillis()))
                 .setValue(coralModelClassInstance);
     }
@@ -338,6 +340,8 @@ public class AdminActivity extends AppCompatActivity {
         CoralModelClass coralModelClassInstance = new CoralModelClass(title, imageUrl);
         Log.d(TAG, "this is the title and imageId " + title+ " imageId- " + imageUrl+" thanks eshe o");
         adminImage.setImageResource(R.drawable.corrallogo);
+        priceInfo.setText("");
+        Toast.makeText(this, "Image succesfully uploaded to app", Toast.LENGTH_LONG).show();
         FirebaseDatabase.getInstance().getReference().child(Constants.NATIVE_WEARS).child(String.valueOf(System.currentTimeMillis()))
                 .setValue(coralModelClassInstance);
     }
@@ -346,7 +350,9 @@ public class AdminActivity extends AppCompatActivity {
         CoralModelClass coralModelClassInstance = new CoralModelClass(title, imageUrl);
         Log.d(TAG, "this is the title and imageId " + title+ " imageId- " + imageUrl+" thanks eshe o");
         adminImage.setImageResource(R.drawable.corrallogo);
-        FirebaseDatabase.getInstance().getReference().child(Constants.CUSTOM_WEARS).child(String.valueOf(System.currentTimeMillis()))
+        priceInfo.setText("");
+        Toast.makeText(this, "Image succesfully uploaded to app", Toast.LENGTH_LONG).show();
+        FirebaseDatabase.getInstance().getReference().child(Constants.CHILDREN_WEARS).child(String.valueOf(System.currentTimeMillis()))
                 .setValue(coralModelClassInstance);
     }
 }

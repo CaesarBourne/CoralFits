@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/card_viewemail"
-
+        android:maxLength="19"
         android:hint="@string/card_number"
 
         android:imeOptions="actionNext"

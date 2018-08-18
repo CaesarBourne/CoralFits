@@ -1,12 +1,12 @@
 package com.caesar.ken.coralfits.Models;
 
 public class User {
-    public String myemail, userid, token;
+    public String myemail, userid, firebaseToken;
 
-    public User(String myemail, String userid, String token) {
+    public User(String myemail, String userid, String firebaseToken) {
         this.myemail = myemail;
         this.userid = userid;
-        this.token = token;
+        this.firebaseToken = firebaseToken;
     }
 
     public String getMyemail() {
@@ -26,10 +26,10 @@ public class User {
     }
 
     public String getToken() {
-        return token;
+        return firebaseToken;
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.firebaseToken = firebaseToken;
     }
 }

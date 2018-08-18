@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caesar.ken.coralfits.FirstIntroduction;
 import com.caesar.ken.coralfits.Login.LoginActivity;
 import com.caesar.ken.coralfits.MainActivity;
 import com.caesar.ken.coralfits.Models.User;
@@ -166,10 +167,10 @@ public class RegisterActivity extends AppCompatActivity {
         String email = firebaseUser.getEmail();
         String userId = firebaseUser.getUid();
 
-        String token = new SharedPreferencesUtility(context).getString(Constants.ARGUMENT_FIREBASE_TOKEN);
+        String firebaseToken = new SharedPreferencesUtility(context).getString(Constants.ARGUMENT_FIREBASE_TOKEN);
 
 
-        User user = new User(email, userId, token);
+        User user = new User(email, userId,firebaseToken );
         FirebaseDatabase.getInstance().getReference().child(Constants.ARGUMENT_USERS).child(firebaseUser.getUid()).setValue(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -199,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         NotificationManager notmanage = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notmanage.notify(uniqueId, notification.build());
-        MainActivity.startMainActivity(getApplicationContext(), Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        FirstIntroduction.startFirstIntroductionActivity(getApplicationContext(), Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
 

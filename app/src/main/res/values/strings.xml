@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">CoralFits</string>
     <string name="Home">Home</string>
-    <string name="Englishwears">English Wears</string>
-    <string name="CustomMadeCloth">CustomMade"</string>
-    <string name="NativeWears">NativeWears</string>
+    <string name="share_baba">Share</string>
+    <string name="Englishwears">Coporate Wears</string>
+    <string name="CustomMadeCloth">Native Wears"</string>
+    <string name="NativeWears">Children Wears</string>
+    <string name="WelcomeT">Welcome</string>
+    <string name="Welcome">Welcome to Corral Fits stores app where u can buylatest Trending outfits, and place orders for custom made outfits taliored to you design </string>
+    <string name="List">You can choose from our wide variety of corporate, native and children wears with their price tags, you can place an order by clicking on an outfit</string>
+    <string name="ListT">Outfits List</string>
+    <string name="PayNavT">Pay for Outfit</string>
+    <string name="PayNav">You can pay for an outfit by clicking on the pay button and navigate to the page to pay via atm cards</string>
+    <string name="customT">Sew Cloth</string>
+    <string name="custom">You can also place an order for an outfit to be designed, or for cloth materials by uploading desired outfit or material via camera or gallery as shown below</string>
+    <string name="logout"></string>
     <string name="restaurantimage"> bread and fruits</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -148,4 +158,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_first_introduction">FirstIntroduction</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

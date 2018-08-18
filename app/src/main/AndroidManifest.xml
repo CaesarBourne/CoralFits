@@ -12,27 +12,24 @@
     <application
         android:name=".FireCorral"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/corrallogo"
         android:label="Corral Fits"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="co.paystack.android.PublicKey"
-            android:value="pk_live_fb45af6c8a78fc3ce459189b6fe8687c8d9b3606"></meta-data>
+            android:value="pk_test_31c425fa24e6450068d2573450eb267748c25723" />
 
         <activity android:name=".MainActivity" />
         <activity
             android:name=".OrderActivity"
             android:parentActivityName=".MainActivity" />
 
-        <service android:name=".FirebaseInstanceID.CorralFirebaseInstanceID">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
+
+
 
         <activity
             android:name=".Login.LoginActivity"
@@ -49,8 +46,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".AdminActivity" />
-        <activity android:name=".CorralPayment.PaymentStack"></activity>
-        <activity android:name=".CorralPayment.TestPayStack"></activity>
+        <activity android:name=".CorralPayment.PaymentStack" />
+        <activity android:name=".CorralPayment.TestPayStack" />
+
+        <activity
+            android:name=".FirstIntroduction"
+            android:label="@string/title_activity_first_introduction"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CustomerData"></activity>
+        <service
+            android:name=".Fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

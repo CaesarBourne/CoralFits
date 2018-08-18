@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bwq="http://schemas.android.com/tools">
 
     <item
         android:title="order"
@@ -18,4 +19,12 @@
         android:id="@+id/logoutUser"
         >
     </item>
+    <item
+        android:title="@string/share_baba"
+        android:orderInCategory="5"
+        android:id="@+id/action_send"
+        bwq:showAsAction="ifRoom"
+        bwq:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+
+
 </menu>

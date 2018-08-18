@@ -101,7 +101,7 @@ public class CustomMadeClothFragment extends Fragment {
         super.onStart();
 
         DatabaseReference mydatabaseRef = FirebaseDatabase.getInstance().getReference()
-                .child(Constants.CUSTOM_WEARS);
+                .child(Constants.CHILDREN_WEARS);
         mydatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

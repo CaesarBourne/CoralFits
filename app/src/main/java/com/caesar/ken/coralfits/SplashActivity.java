@@ -1,7 +1,9 @@
 package com.caesar.ken.coralfits;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
 //        if (FirebaseInstanceId.getInstance().getToken() != null )
 //        {
 //            String token = FirebaseInstanceId.getInstance().getToken().toString();
@@ -38,6 +41,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (FirebaseAuth.getInstance().getCurrentUser() != null){
+//                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+//                    if(!sharedPreferences.getBoolean(OnboardingFragment.COMPLETED_ONBOARDING, false)) {
+//                        // This is the first time running the app, let's go to onboarding
+//                        startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
+//                    }
                     MainActivity.startMainActivity(SplashActivity.this, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 else {
@@ -54,6 +62,5 @@ public class SplashActivity extends AppCompatActivity {
         super.onRestart();
         String token = FirebaseInstanceId.getInstance().getToken().toString();
         Log.d(TAG, "This is the token for this user: "+ token+ " thanks for seen it" );
-        Toast.makeText(this,"the token may not be given " + token +" ko pari y na", Toast.LENGTH_LONG).show();
-    }
+            }
 }

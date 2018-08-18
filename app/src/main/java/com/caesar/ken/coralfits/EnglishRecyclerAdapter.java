@@ -24,14 +24,19 @@ public class EnglishRecyclerAdapter extends RecyclerView.Adapter<EnglishRecycler
     public TextView myText;
     public ImageView myImage;
     public CardClickedListener cardClickedListenerChild;
+    public cardviewRegisterListener cardviewRegisterListenerChild;
 
 
     List<CoralModelClass> insisdeList;
     public EnglishRecyclerAdapter(List<CoralModelClass> myList){
-       this.insisdeList = myList;
+
+        this.insisdeList = myList;
     }
     public interface CardClickedListener{
         void onCardClicked(int position);
+    }
+    public interface cardviewRegisterListener{
+        void onRegisterCardView(CardView mycardView);
     }
 
     public static class EViewHolder extends RecyclerView.ViewHolder{
@@ -41,6 +46,9 @@ public class EnglishRecyclerAdapter extends RecyclerView.Adapter<EnglishRecycler
             super(v);
             cardView = v;
         }
+    }
+    public void setCardviewRegisterListenerChild( cardviewRegisterListener cardviewRegisterListenerChild){
+        this.cardviewRegisterListenerChild = cardviewRegisterListenerChild;
     }
     //this is like a constructor to set the context of the activity using the listener to call the listeners method the interfac listener now has a context
     public void setCardClickedListener(CardClickedListener cardClickedListenerChild){
@@ -53,12 +61,16 @@ public class EnglishRecyclerAdapter extends RecyclerView.Adapter<EnglishRecycler
     @Override
     public EnglishRecyclerAdapter.EViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_english_adapter_layout, parent, false);
+
+
         return new EViewHolder(cardView);
     }
+
 
     @Override
     public void onBindViewHolder(EnglishRecyclerAdapter.EViewHolder holder, final int position) {
         CardView myCard = holder.cardView;
+
         int cardViewPosition = holder.getAdapterPosition();
          myText = (TextView) myCard.findViewById(R.id.info_text);
          myImage = (ImageView) myCard.findViewById(R.id.info_image2);
@@ -76,6 +88,17 @@ public class EnglishRecyclerAdapter extends RecyclerView.Adapter<EnglishRecycler
                 }
             }
         });
+
+        myCard.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (cardClickedListenerChild != null){
+                    cardClickedListenerChild.onCardClicked(position);
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override

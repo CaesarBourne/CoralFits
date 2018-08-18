@@ -1,5 +1,6 @@
 package com.caesar.ken.coralfits.CorralPayment;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,8 +15,12 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 
+import com.caesar.ken.coralfits.HomeFragment;
 import com.caesar.ken.coralfits.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import co.paystack.android.Paystack;
 import co.paystack.android.PaystackSdk;
@@ -23,7 +28,7 @@ import co.paystack.android.Transaction;
 import co.paystack.android.model.Card;
 import co.paystack.android.model.Charge;
 
-public class TestPayStack extends AppCompatActivity {
+public class TestPayStack extends AppCompatActivity  {
 
 
     private Card card;
@@ -52,7 +57,28 @@ public class TestPayStack extends AppCompatActivity {
 
     public static final String VISA_PREFIX = "4";
     public static final String MASTERCARD_PREFIX = "51,52,53,54,55,";
+    public static final String VERVE_PREFIX = "";
+    StatusListener statusListenerChild;
+//    ArrayList<Integer> vervelist = new ArrayList<>();
+    private  static final ArrayList<String> vervelistConfirm = new ArrayList<>();
+    public interface StatusListener{
+        void status(String pay, String message);
+    }
 
+    public void setStatusListener(StatusListener statusListenerChild){
+        this.statusListenerChild = statusListenerChild;
+    }
+    public ArrayList returnVerve(){
+        ArrayList<Integer> vervelist = new ArrayList<>();
+
+        for (int i = 506099; i <= 506198; i++ ){
+            vervelist.add(i);
+        }
+        for (int j = 650002; j <= 650027; j++ ){
+            vervelist.add(j);
+        }
+        return vervelist;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,21 +167,21 @@ public class TestPayStack extends AppCompatActivity {
                 String source = s.toString();
                 int length=source.length();
 
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(source);
+//                StringBuilder stringBuilder = new StringBuilder();
+//                stringBuilder.append(source);
+//
+//                if(length>0 && length%5==0)mdmj
+//                {
+//                    if(isDelete)
+//                        stringBuilder.deleteCharAt(length-1);
+//                    else {
+//                        stringBuilder.insert(length - 1, " ");
+//                        cardNumberField.setText(stringBuilder);
+//
+//                    }
+//                }
 
-                if(length>0 && length%5==0)
-                {
-                    if(isDelete)
-                        stringBuilder.deleteCharAt(length-1);
-                    else {
-                        stringBuilder.insert(length - 1, " ");
-                        cardNumberField.setText(stringBuilder);
-
-                    }
-                }
-
-                if(length == 4){
+                if(length >= 6){
                    if (cardtype(source) == VISA){
                        cardNumberField.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_visa, 0);
                     }
@@ -165,6 +191,9 @@ public class TestPayStack extends AppCompatActivity {
                     else if (cardtype(source) == Verve){
                        cardNumberField.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.vervec, 0);
                    }
+                   else {
+                       cardNumberField.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                   }
                 }
 
             }
@@ -173,14 +202,17 @@ public class TestPayStack extends AppCompatActivity {
 
     }
     public int cardtype(String cardprefix){
+
         if (cardprefix.substring(0, 1).equals(VISA_PREFIX))
             return VISA;
         else if (MASTERCARD_PREFIX.contains(cardprefix.substring(0, 2) + ","))
             return MASTERCARD;
-        else {
+        else if (returnVerve().contains(cardprefix.substring(0, 6))){
             return Verve;
         }
-
+        else{
+            return  0;
+        }
     }
 //    public static boolean isValid(String cardNumber) {
 //        if (!TextUtils.isEmpty(cardNumber) && cardNumber.length() >= 4)
@@ -221,6 +253,11 @@ public class TestPayStack extends AppCompatActivity {
                 String paymentReference = transaction.getReference();
                 Toast.makeText(TestPayStack.this, "Transaction Successful! payment reference: "
                         + paymentReference, Toast.LENGTH_LONG).show();
+                if (statusListenerChild != null){
+                    statusListenerChild.status(paymentReference, "your order is been processed...");
+                    HomeFragment.startHomefragment(TestPayStack.this);
+                }
+
             }
 
             @Override

@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -44,7 +49,10 @@ public class EnglishWearsFragment extends Fragment {
     private static final String TAG = "EnglishWearsFragment";
     private RecyclerView recyclerView;
     EnglishRecyclerAdapter myEnglishRecyclerAdapter;
+    ShareActionProvider shareActionProvider;
+    String imagedata;
     List<CoralModelClass> orderList;
+    public CardView customCardView;
     public EnglishWearsFragment() {
         // Required empty public constructor
     }
@@ -70,9 +78,12 @@ public class EnglishWearsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+         customCardView = (CardView) inflater.inflate(R.layout.cardview_english_adapter_layout, null);
+        registerForContextMenu(customCardView);
 
-                return linearLayout;
+        return linearLayout;
     }
+
 
 
 //    englishdatabasereference = FirebaseDatabase.getInstance().getReference("EnglishWears").child("Post1");
@@ -127,17 +138,55 @@ public class EnglishWearsFragment extends Fragment {
 
                 String imageClicked = orderList.get(position).getImageId();
                 String titleClicked = orderList.get(position).getTitle();
-
+                imagedata = imageClicked;
                 Log.d(TAG, "Please hekp me chechk this id: "+ imageClicked+ " and the title "+ titleClicked +" thanks");
                 intent.putExtra(OrderActivity.EXTRA_CARD_VIEW_image, imageClicked);
                 intent.putExtra(OrderActivity.EXTRA_CARD_VIEW_title, titleClicked);
                 getContext().startActivity(intent);
             }
         };
-        //this first sets the listener so when the card is clicked it fetches position from the adapter
+//        EnglishRecyclerAdapter.cardviewRegisterListener cardviewRegisterListener = new EnglishRecyclerAdapter.cardviewRegisterListener() {
+//            @Override
+//            public void onRegisterCardView(CardView mycardView) {
+//                registerForContextMenu(mycardView);
+//                customCardView = mycardView;
+//            }
+//        };
+//        myEnglishRecyclerAdapter.setCardviewRegisterListenerChild(cardviewRegisterListener);
+//        //this first sets the listener so when the card is clicked it fetches position from the adapter
         myEnglishRecyclerAdapter.setCardClickedListener(cardViewClicked);
 //        Bundle arguments = new Bundle();
 //        arguments.putSerializable(OrderActivity.EXTRA_CARD_VIEW_ARRAYLIST, (Serializable)orderList);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.card_view){
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.sharepic_menu, menu);
+            MenuItem menuItem = menu.findItem(R.id.action_send);
+            shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+            startIntent(imagedata);
+        }
+    }
+    public void startIntent(String text){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra( Intent.EXTRA_TEXT, text);
+        shareActionProvider.setShareIntent(intent);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_send:
+
+                return true;
+                default:
+                    return super.onContextItemSelected(item);
+        }
     }
 
     @Override

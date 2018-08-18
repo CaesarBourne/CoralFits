@@ -12,6 +12,19 @@ import co.paystack.android.PaystackSdk;
  */
 
 public class FireCorral extends Application {
+    private static boolean isChatActivityOpen = false;
+
+
+
+    public static boolean isChatActivityOpen(){
+
+        return isChatActivityOpen;
+    }
+
+    public static void setChatActivityOpen(boolean tisChatActivityOpen){
+        FireCorral.isChatActivityOpen = tisChatActivityOpen;
+    }
+
     @Override
     public void onCreate() {
 

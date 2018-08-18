@@ -46,19 +46,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:id="@+id/orderlinear"
             android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/upload_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/nameInfo"
                 android:inputType="textEmailAddress"
-                android:hint="please enter your email address"/>
+                android:hint="please your name"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/datainfo"
-                android:hint="Pls enter your Info"/>
+                android:hint="Pls specifyany other info on outfit"/>
 
 
 
@@ -82,7 +91,7 @@
             <Button
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:text="Upload to admin"
+                android:text="Order for Outfit"
                 android:id="@+id/uploadAdmin"
                 android:drawableRight="@drawable/upload_image"
                 android:backgroundTint="@color/green_A700"/>
@@ -113,7 +122,30 @@
                     android:background="@color/orange_300"
                     android:layout_toRightOf="@+id/imageorder"
                     android:layout_alignTop="@+id/imageorder"
+                    android:visibility="gone"
                     android:padding="10dp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="customer data"
+                    android:padding="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/light_green_A400"
+                    android:id="@+id/customerdatstart"
+                    android:layout_toRightOf="@+id/imageorder"
+                    android:layout_below="@+id/startPayActivity"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"/>
+                <EditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/accent_500"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/imageorder"
+                    android:layout_below="@+id/customerdatstart"
+                    android:id="@+id/custname"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
         </LinearLayout>
